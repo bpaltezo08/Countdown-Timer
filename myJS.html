@@ -1,0 +1,55 @@
+<html>
+
+<body>
+    <p id="clock">Countdown Timer</p>
+</body>
+
+<script>
+
+    function myClock(){
+        
+        const $ = this;
+
+        this.countdown = function(minutes){
+
+            let counter, speed = 1000, started = false;
+            let h = ((minutes > 60)? Math.floor(minutes/60) : 0);
+            let m = ((minutes > 60)? minutes % 60 : minutes);
+            let s = 60;
+
+            function countdown(){
+                if(h <= 0 && m <= 0 && s <= 0){
+                    clearInterval(counter);
+                    console.log("Time Over");
+                    alert("Time Over");
+                    return;
+                }else if(s == 0){                    
+                    if(h > 0 && m == 0){
+                        h--;m = 60;
+                    }
+                    m--;s = 59;
+                }else{
+                    if(!started) m--;
+                    s--;
+                }
+                clock.innerHTML = $.format(h,m,s);
+                started = true;
+            }
+
+            clock.innerHTML = $.format(h,m,s);
+            counter = setInterval(countdown, speed);
+
+        }
+
+        this.format = function(h, m, s){
+            return ((h<10)?"0"+h:h)+":"+((m<10)?"0"+m:m)+":"+((s==60)?"00":((s<10)?"0"+s:s));
+        }
+
+    }
+
+
+    let timer = new myClock();
+
+
+</script>
+</html>
